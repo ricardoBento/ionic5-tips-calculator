@@ -14,13 +14,10 @@ export class HomePage {
     private storage: Storage,
   ) { }
   ionViewWillEnter() {
-    this.storage.ready().then(()=>{
-      console.log('ready');
-      this.storage.clear().then(()=>{
-        console.log('cleared');
-      });
-    })
-    
+    this.storage.ready().then(() => {
+      // this.storage.clear().then(()=>{
+      // });
+    });
   }
   calculatorPage() {
     this.router.navigateByUrl('calculator');
