@@ -23,18 +23,29 @@
                             <ion-col size="12" *ngIf='i === 0'>
                                 <ion-card-title>
                                     <ion-item>
-                                        <ion-label position="floating">Name</ion-label>
-                                        <ion-input class='border' type="text" maxlength="50" formControlName="name">
+                                        <ion-label for='name' position="floating">Name</ion-label>
+                                        <ion-input class='border' type="text" maxlength="50" formControlName="name"
+                                            (ionBlur)='ionLosesFocus($event, i)'>
                                         </ion-input>
+                                    </ion-item>
+                                    <ion-item *ngIf="nameValidation === i">
+                                        <ion-text color="danger">
+                                            Name cannot be empty.
+                                        </ion-text>
                                     </ion-item>
                                 </ion-card-title>
                             </ion-col>
                             <ion-col size="9" *ngIf='i != 0'>
                                 <ion-card-title>
                                     <ion-item>
-                                        <ion-label position="floating">Name</ion-label>
-                                        <ion-input class='border' type="text" maxlength="50" formControlName="name">
+                                        <ion-label for='name' position="floating">Name</ion-label>
+                                        <ion-input class='border' type="text" maxlength="50" formControlName="name" (ionBlur)='ionLosesFocus($event, i)'>
                                         </ion-input>
+                                    </ion-item>
+                                    <ion-item *ngIf="nameValidation === i">
+                                        <ion-text color="danger">
+                                            Name cannot be empty.
+                                        </ion-text>
                                     </ion-item>
                                 </ion-card-title>
                             </ion-col>
@@ -49,40 +60,41 @@
                     <ion-card-content>
                         <ion-row class='ion-text-center'>
                             <ion-col size="6">
-                                <ion-button *ngIf='!displayPoints[i]' (click)="presentAlertRadio(i)" fill="outline" shape="round">
-                                    Points
+                                <ion-button (click)="presentAlertRadio(i)" fill="outline">
+                                    <ion-text *ngIf="!displayPoints[i]" color="primary">
+                                        Points
+                                    </ion-text>
+                                    <ion-text *ngIf='displayPoints[i]' color="primary">
+                                        {{ displayPoints[i] }}
+                                    </ion-text>
                                 </ion-button>
-
-                                <ion-text color="dark">
-                                    {{ displayPoints[i] }}
-                                </ion-text>
                             </ion-col>
 
                             <ion-col size="6">
-                                <ion-button *ngIf='!displayHours[i]' (click)="showPicker(i)" fill="outline" shape="round">
-                                    Hours
+                                <ion-button (click)="showPicker(i)" fill="outline">
+                                    <ion-text *ngIf="!displayHours[i]" color="primary">
+                                        Hours
+                                    </ion-text>
+                                    <ion-text *ngIf='displayHours[i]' color="primary">
+                                        {{ displayHours[i] }}
+                                    </ion-text>
                                 </ion-button>
-                                <ion-text color="dark">
-                                    {{ displayHours[i] }}
-                                </ion-text>
+
                             </ion-col>
                         </ion-row>
                     </ion-card-content>
                 </ion-card>
             </div>
         </form>
-
-
     </ion-grid>
-
 </ion-content>
-
 <ion-footer>
     <ion-toolbar color='secondary'>
         <ion-grid class='footer-grid'>
             <ion-row>
                 <ion-col size="2">
-                    <ion-button size="small" (click)='home()'>
+                    <ion-button color='danger' size="small"
+                        (click)='home()'>
                         <ion-icon color='light' slot="icon-only" name="home"></ion-icon>
                     </ion-button>
                 </ion-col>

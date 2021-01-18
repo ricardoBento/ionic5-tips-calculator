@@ -106,6 +106,7 @@ export class CalculatorPage implements OnInit {
       if (waitersList === null) this.router.navigateByUrl('nav/home');
       else {
         this.globalWaitersArray = [];
+        // console.log(waitersList);
         waitersList.forEach(element => {
           this.globalWaitersArray.push({
             name: element.name,
@@ -113,7 +114,7 @@ export class CalculatorPage implements OnInit {
             hours: element.hours,
           });
         });
-        console.log(this.globalWaitersArray)
+        // console.log(this.globalWaitersArray)
       }
     });
   }

@@ -15,8 +15,8 @@ export class HomePage {
   ) { }
   ionViewWillEnter() {
     this.storage.ready().then(() => {
-      // this.storage.clear().then(()=>{
-      // });
+      this.storage.clear().then(()=>{
+      });
     });
   }
   calculatorPage() {
