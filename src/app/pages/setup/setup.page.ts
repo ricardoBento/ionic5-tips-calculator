@@ -59,8 +59,8 @@ export class SetupPage implements OnInit {
   pointsFormArray;
   nextButton = false;
   submitted = false;
-  nameValidation: any;
-  nameValidationMessage;
+  // nameValidation: any;
+  // nameValidationMessage;
   validationMessages = [];
   index;
   constructor(
@@ -133,15 +133,20 @@ export class SetupPage implements OnInit {
   ionLosesFocus($event, i: number) {
     // this.index = i;
     if ($event.target.value === null || $event.target.value === undefined || $event.target.value === '') {
-      this.nameValidation = i;
+      // this.nameValidation = i;
       // console.log('blur', $event.target.value);
     }
   }
   nameValidatationArray(errMessage, i) {
-    this.nameValidation = i;
+    // this.nameValidation = i;
   }
   ngOnInit() {
-
+    console.log(this.formData);
+  }
+  onValueChanges(): void {
+    this.waitersForm.controls.name.valueChanges.subscribe(name => {
+      // console.log('name: ' + name);
+    });
   }
   async submitWaiters() {
     // console.log(this.waitersForm.value.waitersList);
@@ -152,17 +157,19 @@ export class SetupPage implements OnInit {
       // console.log(element);
       // console.log(element.name);
       let resName = element.name;
-      let pointsArray;
-      pointsArray = element.points[0]
-      let hoursArray = element.hours[0];
-      let pointsTotal: any = this.sumPointsArray(pointsArray);
+      let pointsArray = [];
+      // pointsArray.push(element.points);
+      let pointsTotal = this.sumPointsArray(element.points[0]);
       console.log(pointsTotal);
-      WaitersArray.push({
-        name: element.name,
-        points: pointsTotal,
-        hours: hoursArray,
-      });
-      console.log(WaitersArray);
+      let hoursArray = element.hours[0];
+
+
+      // WaitersArray.push({
+      //   name: element.name,
+      //   points: pointsTotal,
+      //   hours: hoursArray,
+      // });
+      // console.log(WaitersArray);
       // this.storage.set('waitersList', WaitersArray).then(() => {
       //   // this.router.navigateByUrl('calculator').then(() => {
       //   // });
@@ -283,7 +290,8 @@ export class SetupPage implements OnInit {
     });
   }
   async presentAlertRadio(i) {
-    this.displayPoints = [];
+
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Radio',
@@ -298,26 +306,48 @@ export class SetupPage implements OnInit {
         {
           text: 'Ok',
           handler: ($event) => {
-            let pointsArray = $event;
+            let points = $event;
+            let sumArray: any = [];
+            // pointsArray.push($event);
+            // console.log(points, $event);
             this.pointsFormArray = this.waitersForm.controls.waitersList.value[i].points as FormArray;
-            this.pointsFormArray.push(pointsArray);
+            this.pointsFormArray.push(points);
             //
+            let FormArray = this.waitersForm.controls.waitersList.value[i].points;
             let myDisplayPoints: any = this.waitersForm.controls.waitersList.value as FormArray;
-            myDisplayPoints.forEach(element => {
-              let myelement = element.points;
-              this.displayPoints.push(myelement);
+            FormArray.forEach(element => {
+              console.log(element);
+              sumArray = this.sumPointsArray(element);
+              this.displayPoints.push(sumArray);
             });
+            console.log(this.displayPoints);
           }
         }
       ],
     });
-    await alert.present();
+    alert.present();
+    alert.onDidDismiss().then((res) => {
+      // console.log(res);
+      // this.displayPoints = [];
+      // if (this.displayPoints.index !== i) {
+      //   this.displayPoints = [];
+      //   console.log('display points array reseted');
+      // }
+      // if(this.displayPoints.index === undefined) {
+      //   this.displayPoints = [];
+      //   console.log('display points array reseted');
+      // }
+      // console.log(this.displayPoints.index, i);
+    });
   }
   sumPointsArray(array) {
-    console.log(array);
-    if (array) array.reduce(function (a, b) {
-      a + b;
-    }, 0);
+    if (array) {
+      let sum = 0;
+      let larray = array;
+      console.log(larray)
+      sum = larray.reduce((a, b) => a + b, 0);
+      return sum
+    }
     else console.error('no array on sumPointsArray()');
   }
   async Error(message) {
@@ -334,7 +364,6 @@ export class SetupPage implements OnInit {
     });
     await alert.present();
   }
-
   getPoints() {
     return [
       { type: 'checkbox', label: 'Speak English', value: 0.5 },
@@ -354,6 +383,6 @@ export class SetupPage implements OnInit {
     this.waitersForm.reset();
   }
   home() {
-    this.router.navigateByUrl('nav/home');
+    this.router.navigateByUrl('home');
   }
 }

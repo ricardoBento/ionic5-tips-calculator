@@ -1,0 +1,78 @@
+<ion-content fullscreen no-bounce has-bouncing="false" forceOverscroll="false">
+  <ion-grid class="app-auth ion-text-center">
+    <!-- <form [formGroup]="loginForm" (submit)="onSubmit()" novalidate>
+      <ion-row>
+        <ion-col>
+          <ion-item class='input-radius'>
+            <ion-input class='ion-text-uppercase' type="email" placeholder='Email' formControlName="email">
+            </ion-input>
+          </ion-item>
+          <div class='text-validation'
+            *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')">
+            <ion-text>
+              The email field is required.
+            </ion-text>
+          </div>
+          <div class='text-validation' *ngIf="email_errors">
+            <ion-text>
+              {{ email_errors }}
+            </ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item class='input-radius'>
+            <ion-input class='ion-text-uppercase' type="password" placeholder='Password' formControlName="password">
+            </ion-input>
+          </ion-item>
+          <div class='text-validation'
+            *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
+            <ion-text>
+              The Password field is required.
+            </ion-text>
+          </div>
+          <div class='text-validation'
+            *ngIf="non_field_errors && !(loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required'))">
+            <ion-text>
+              {{ non_field_errors }}
+            </ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+      <div class='button-container'>
+        <ion-button class='button-shadow-effect ion-text-uppercase' shape="round" expand="block" fill="solid"
+          color="primary" type="submit">
+          <ion-text color="light" class='text-shadow-effect'>
+            Let's Go!
+          </ion-text>
+        </ion-button>
+      </div>
+    </form> -->
+  </ion-grid>
+
+
+  <form [formGroup]="testForm">
+    <ion-label>Name:
+      <ion-input type="text" formControlName="name"></ion-input>
+      <div class='text-validation'
+              *ngIf="testForm.get('name')?.touched && testForm.get('name')?.hasError('required')">
+              <ion-text>
+                The email field is required.
+              </ion-text>
+            </div>
+    </ion-label>
+    <ion-label>Email:
+      <ion-input type="text" formControlName="email"></ion-input>
+      <div class='text-validation'
+              *ngIf="testForm.get('email')?.touched && testForm.get('email')?.hasError('required')">
+              <ion-text>
+                The email field is required.
+              </ion-text>
+            </div>
+    </ion-label>
+    <ion-button (click)="submitTestForm()" expand="block" fill="clear" shape="round">
+      Test form
+    </ion-button>
+  </form>
+</ion-content>

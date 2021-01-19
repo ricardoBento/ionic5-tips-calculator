@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./ion-nav/ion-nav.module').then(m => m.IonNavPageModule),
+  // },
   {
     path: '',
-    loadChildren: () => import('./ion-nav/ion-nav.module').then(m => m.IonNavPageModule),
-  },
-  {
-    path: '',
-    redirectTo: 'ion-nav',
+    redirectTo: 'form-validation',
     pathMatch: 'full'
   },
   {
@@ -27,10 +27,14 @@ const routes: Routes = [
     path: 'summary',
     loadChildren: () => import('./pages/summary/summary.module').then(m => m.SummaryPageModule)
   },
-  // {
-  //   path: 'ion-nav',
-  //   loadChildren: () => import('./ion-nav/ion-nav.module').then(m => m.IonNavPageModule),
-  // },
+  {
+    path: 'form-validation',
+    loadChildren: () => import('./form-validation/form-validation.module').then( m => m.FormValidationPageModule)
+  },
+  {
+    path: 'ion-nav',
+    loadChildren: () => import('./ion-nav/ion-nav.module').then(m => m.IonNavPageModule),
+  },
 ];
 
 @NgModule({

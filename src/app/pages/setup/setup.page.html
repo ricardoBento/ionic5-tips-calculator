@@ -20,7 +20,7 @@
                 <ion-card [formGroupName]="i" *ngFor="let item of formData.controls; let i = index">
                     <ion-card-header>
                         <ion-row class='ion-text-center'>
-                            <ion-col size="12" *ngIf='i === 0'>
+                            <ion-col size="12" *ngIf='i === 0; else removeTemplate'>
                                 <ion-card-title>
                                     <ion-item>
                                         <ion-label for='name' position="floating">Name</ion-label>
@@ -28,58 +28,87 @@
                                             (ionBlur)='ionLosesFocus($event, i)'>
                                         </ion-input>
                                     </ion-item>
-                                    <ion-item *ngIf="nameValidation === i">
-                                        <ion-text color="danger">
-                                            Name cannot be empty.
+                                    <ion-item class='text-validation' lines="none"
+                                        *ngIf="errorCtr.controls[i].get('name')?.touched && errorCtr.controls[i].get('name')?.hasError('required')">
+                                        <ion-text color='danger'>
+                                            Add a name
                                         </ion-text>
                                     </ion-item>
                                 </ion-card-title>
                             </ion-col>
-                            <ion-col size="9" *ngIf='i != 0'>
-                                <ion-card-title>
-                                    <ion-item>
-                                        <ion-label for='name' position="floating">Name</ion-label>
-                                        <ion-input class='border' type="text" maxlength="50" formControlName="name" (ionBlur)='ionLosesFocus($event, i)'>
-                                        </ion-input>
-                                    </ion-item>
-                                    <ion-item *ngIf="nameValidation === i">
-                                        <ion-text color="danger">
-                                            Name cannot be empty.
-                                        </ion-text>
-                                    </ion-item>
-                                </ion-card-title>
-                            </ion-col>
-                            <ion-col class='remove-btn-col' size="3" *ngIf='i != 0'>
-                                <ion-button size="small" (click)="removeWaitersField(i)" color='danger' fill="outline">
-                                    Remove
-                                </ion-button>
-                            </ion-col>
+                            <ng-template #removeTemplate>
+                                <ion-col size="9">
+                                    <ion-card-title>
+                                        <ion-item>
+                                            <ion-label for='name' position="floating">Name</ion-label>
+                                            <ion-input class='border' type="text" maxlength="50" formControlName="name"
+                                                (ionBlur)='ionLosesFocus($event, i)'>
+                                            </ion-input>
+                                        </ion-item>
+                                        <ion-item class='text-validation' lines="none"
+                                            *ngIf="errorCtr.controls[i].get('name')?.touched && errorCtr.controls[i].get('name')?.hasError('required')">
+                                            <ion-text color='danger'>
+                                                Add a name
+                                            </ion-text>
+                                        </ion-item>
+                                    </ion-card-title>
+                                </ion-col>
+                                <ion-col class='remove-btn-col' size="3">
+                                    <ion-button size="small" (click)="removeWaitersField(i)" color='danger'
+                                        fill="outline">
+                                        Remove
+                                    </ion-button>
+                                </ion-col>
+                            </ng-template>
+
                         </ion-row>
                     </ion-card-header>
+
 
                     <ion-card-content>
                         <ion-row class='ion-text-center'>
                             <ion-col size="6">
-                                <ion-button (click)="presentAlertRadio(i)" fill="outline">
-                                    <ion-text *ngIf="!displayPoints[i]" color="primary">
-                                        Points
+                                <ion-item lines="none" *ngIf='!displayPoints[i]'>
+                                    <ion-button (click)="presentAlertRadio(i)" fill="outline">
+                                        <ion-text color="primary">
+                                            Points == {{ i }}
+                                        </ion-text>
+                                    </ion-button>
+                                </ion-item>
+                                <ion-item class='text-validation' lines="none">
+                                    <ion-text color='danger'>
+                                        *validation = Add Points
                                     </ion-text>
-                                    <ion-text *ngIf='displayPoints[i]' color="primary">
+                                </ion-item>
+                                <ion-item lines="none">
+                                    <ion-button (click)="presentAlertRadio(i)" fill="outline">
+                                        <ion-text color="primary">
+                                            {{ displayPoints[i] | json }}
+                                        </ion-text>
+                                    </ion-button>
+                                    <!-- <ion-text color="primary">
                                         {{ displayPoints[i] }}
-                                    </ion-text>
-                                </ion-button>
+                                    </ion-text> -->
+                                </ion-item>
+
                             </ion-col>
 
                             <ion-col size="6">
-                                <ion-button (click)="showPicker(i)" fill="outline">
-                                    <ion-text *ngIf="!displayHours[i]" color="primary">
-                                        Hours
+                                <ion-item lines="none">
+                                    <ion-button (click)="showPicker(i)" fill="outline">
+                                        <ion-text *ngIf="!displayHours[i]" color="primary">
+                                            Hours
+                                        </ion-text>
+                                        <ion-text *ngIf='displayHours[i]' color="primary">
+                                            {{ displayHours[i] }}
+                                        </ion-text>
+                                    </ion-button>
+                                </ion-item>
+                                <ion-item class='text-validation' lines="none">
+                                    <ion-text color='danger'>
+                                        Add hours
                                     </ion-text>
-                                    <ion-text *ngIf='displayHours[i]' color="primary">
-                                        {{ displayHours[i] }}
-                                    </ion-text>
-                                </ion-button>
-
+                                </ion-item>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>
@@ -93,9 +122,8 @@
         <ion-grid class='footer-grid'>
             <ion-row>
                 <ion-col size="2">
-                    <ion-button color='danger' size="small"
-                        (click)='home()'>
-                        <ion-icon color='light' slot="icon-only" name="home"></ion-icon>
+                    <ion-button color='danger' size="small" (click)='formReset()'>
+                        <ion-icon color='light' slot="icon-only" name="compass"></ion-icon>
                     </ion-button>
                 </ion-col>
                 <ion-col size="8">
