@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides, AlertController, PickerController, ModalController } from '@ionic/angular';
 import { PickerOptions } from "@ionic/core";
 import { Observable, from, of } from 'rxjs';
@@ -56,13 +56,15 @@ export class SetupPage implements OnInit {
   displayHours: any = [];
   displayPoints: any = [];
   hoursFormArray;
-  pointsFormArray;
+  pointsFormArray: any;
   nextButton = false;
   submitted = false;
   // nameValidation: any;
   // nameValidationMessage;
   validationMessages = [];
+  pointsErrors: any;
   index;
+  @ViewChild('myForm') myForm;
   constructor(
     private storage: Storage,
     private router: Router,
@@ -124,12 +126,6 @@ export class SetupPage implements OnInit {
   get formData() {
     return this.waitersForm.get('waitersList') as FormArray;
   }
-  get formSecondData() {
-    return <any>this.waitersForm.get('waitersList');
-  }
-  get errorCtr(): any {
-    return this.waitersForm.controls.waitersList;
-  }
   ionLosesFocus($event, i: number) {
     // this.index = i;
     if ($event.target.value === null || $event.target.value === undefined || $event.target.value === '') {
@@ -141,41 +137,59 @@ export class SetupPage implements OnInit {
     // this.nameValidation = i;
   }
   ngOnInit() {
-    console.log(this.formData);
+    // console.log(this.waitersForm);
+    this.myForm.valueChanges.subscribe(
+      result => console.log(this.waitersForm.status),
+    );
+    this.pointsErrorCtr().valueChanges.subscribe((res)=>{
+      console.log(res);
+    })
   }
   onValueChanges(): void {
-    this.waitersForm.controls.name.valueChanges.subscribe(name => {
+    this.waitersForm.controls.points.valueChanges.subscribe(name => {
       // console.log('name: ' + name);
     });
   }
-  async submitWaiters() {
-    // console.log(this.waitersForm.value.waitersList);
-    // console.log(this.waitersForm.controls.waitersList.valid);
+  get errorCtr(): any {
+    return this.waitersForm.controls.waitersList;
+  }
+  get pointsErrorCtr(): any {
+    return this.waitersForm.controls.waitersList as FormControl;
+  }
+  pointsErr(i) {
+    return this.pointsErrorCtr.controls[i].get("points");
+  }
+  runValidation() {
 
-    let WaitersArray = [];
+    this.pointsErrors = [];
     this.waitersForm.value.waitersList.forEach((element, i) => {
-      // console.log(element);
-      // console.log(element.name);
-      let resName = element.name;
-      let pointsArray = [];
-      // pointsArray.push(element.points);
-      let pointsTotal = this.sumPointsArray(element.points[0]);
-      console.log(pointsTotal);
-      let hoursArray = element.hours[0];
+      // console.log(element, i);
+      // let myPoints: any = this.pointsErr(i);
+      let err = this.pointsErr(i).controls.valid;
 
-
-      // WaitersArray.push({
-      //   name: element.name,
-      //   points: pointsTotal,
-      //   hours: hoursArray,
-      // });
-      // console.log(WaitersArray);
-      // this.storage.set('waitersList', WaitersArray).then(() => {
-      //   // this.router.navigateByUrl('calculator').then(() => {
-      //   // });
-      // });
+      this.pointsErrors.push(err);
+      console.log(err);
+      // if (err.length === 0) {
+      //   console.log(err);
+      //   // let erMess = 'add hours here please';
+      //   // this.pointsErrors.push(erMess);
+      //   // console.log(this.pointsErrors);
       // }
     });
+    console.log(this.pointsErrors);
+    // this.waitersForm.controls.waitersList.controls.forEach((element, i) => {
+    //   console.log(element);
+    // });
+
+    // err.forEach(element => {
+    //   console.log(element);
+    // });
+
+
+    // this.submitWaiters();
+  }
+  submitWaiters() {
+    console.warn(this.waitersForm);
   }
   async showPicker(i) {
     let picker = await this.pickerController.create({
@@ -279,6 +293,7 @@ export class SetupPage implements OnInit {
       let hoursString: any = [`${selectedHour}.${selectedMinutes}`];
       let hoursNumber = parseFloat(hoursString);
       this.hoursFormArray = this.waitersForm.controls.waitersList.value[i].hours as FormArray;
+
       this.hoursFormArray.push(hoursNumber);
       //
       this.displayHours = [];
@@ -290,8 +305,6 @@ export class SetupPage implements OnInit {
     });
   }
   async presentAlertRadio(i) {
-
-
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Radio',
@@ -306,45 +319,37 @@ export class SetupPage implements OnInit {
         {
           text: 'Ok',
           handler: ($event) => {
-            let points = $event;
+            let points = this.sumPointsArray($event);
             let sumArray: any = [];
             // pointsArray.push($event);
-            // console.log(points, $event);
+            // console.log(points);
             this.pointsFormArray = this.waitersForm.controls.waitersList.value[i].points as FormArray;
             this.pointsFormArray.push(points);
+            let err = this.pointsErr(i);
+            err = true;
+            console.log(err);
+            // console.log(this.pointsFormArray);
             //
             let FormArray = this.waitersForm.controls.waitersList.value[i].points;
-            let myDisplayPoints: any = this.waitersForm.controls.waitersList.value as FormArray;
             FormArray.forEach(element => {
-              console.log(element);
-              sumArray = this.sumPointsArray(element);
+              // console.log(element);
+              sumArray = element;
               this.displayPoints.push(sumArray);
             });
-            console.log(this.displayPoints);
+            // console.log(this.displayPoints);
           }
         }
       ],
     });
     alert.present();
     alert.onDidDismiss().then((res) => {
-      // console.log(res);
-      // this.displayPoints = [];
-      // if (this.displayPoints.index !== i) {
-      //   this.displayPoints = [];
-      //   console.log('display points array reseted');
-      // }
-      // if(this.displayPoints.index === undefined) {
-      //   this.displayPoints = [];
-      //   console.log('display points array reseted');
-      // }
-      // console.log(this.displayPoints.index, i);
     });
   }
   sumPointsArray(array) {
     if (array) {
       let sum = 0;
       let larray = array;
-      console.log(larray)
+      // console.log(larray)
       sum = larray.reduce((a, b) => a + b, 0);
       return sum
     }

@@ -3,24 +3,20 @@
     padding-bottom: 0 !important;
 }
 //
-.app-logo {
-    margin-top: -5vh;
-    margin-bottom: 2vh;
-    height: 181px;
-    width: 267px;
-}
-.auth-background {
-    margin-top: 0vh;
+ion-row.ion-col{
     height: 100%;
 }
-.passreset {
-    margin-top: 5vh;
-    position: relative;
-    ion-text {
-        font-size: 16px;
+ion-col.form-col {
+    ion-text.validation-text {
+        font-size: 12px;
     }
 }
-a {
-    list-style-type: none;
-    color: inherit;
+ion-col.buttons-col {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    ion-button {
+        width: 100%;
+        height: 50px;
+    }
 }

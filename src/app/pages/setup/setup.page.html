@@ -13,9 +13,7 @@
         <ion-button tooltip="I'm a beautiful tooltip" positionH="left" positionH="right" [arrow]="showArrow" [event]="tooltipEvent" [debounce]="debounce" [duration]="duration" fill="outline">View</ion-button>
     </ion-col> -->
     <ion-grid>
-
-
-        <form [formGroup]="waitersForm" novalidate>
+        <form #myForm [formGroup]="waitersForm" novalidate>
             <div formArrayName="waitersList">
                 <ion-card [formGroupName]="i" *ngFor="let item of formData.controls; let i = index">
                     <ion-card-header>
@@ -64,35 +62,35 @@
                         </ion-row>
                     </ion-card-header>
 
-
                     <ion-card-content>
                         <ion-row class='ion-text-center'>
                             <ion-col size="6">
-                                <ion-item lines="none" *ngIf='!displayPoints[i]'>
-                                    <ion-button (click)="presentAlertRadio(i)" fill="outline">
+                                <ion-list>
+                                    <ion-item lines="none">
+                                        <ion-button (click)="presentAlertRadio(i)" fill="outline">
+                                            <ion-text color="primary">
+                                                Points
+                                            </ion-text>
+                                        </ion-button>
+                                    </ion-item>
+                                    <ion-item lines="none" *ngIf='displayPoints[i]'>
                                         <ion-text color="primary">
-                                            Points == {{ i }}
+                                            {{ displayPoints[i] }}
                                         </ion-text>
-                                    </ion-button>
-                                </ion-item>
-                                <ion-item class='text-validation' lines="none">
-                                    <ion-text color='danger'>
-                                        *validation = Add Points
-                                    </ion-text>
-                                </ion-item>
-                                <ion-item lines="none">
-                                    <ion-button (click)="presentAlertRadio(i)" fill="outline">
-                                        <ion-text color="primary">
-                                            {{ displayPoints[i] | json }}
+                                    </ion-item>
+                                    <ion-item class='text-validation' lines="none">
+                                        <ion-text color='danger'>
+                                            <!-- {{ pointsErrors | json }} -->
                                         </ion-text>
-                                    </ion-button>
-                                    <!-- <ion-text color="primary">
-                                        {{ displayPoints[i] }}
-                                    </ion-text> -->
-                                </ion-item>
-
+                                    </ion-item>
+                                </ion-list>
                             </ion-col>
-
+                            <ion-text color='danger' *ngIf='this.pointsErr(i).errors.required'>
+                                add points
+                            </ion-text>
+                            <ion-text color='danger' *ngIf='this.pointsErr(i).valid === false'>
+                                add points
+                            </ion-text>
                             <ion-col size="6">
                                 <ion-item lines="none">
                                     <ion-button (click)="showPicker(i)" fill="outline">
@@ -112,6 +110,7 @@
                             </ion-col>
                         </ion-row>
                     </ion-card-content>
+
                 </ion-card>
             </div>
         </form>
@@ -127,7 +126,7 @@
                     </ion-button>
                 </ion-col>
                 <ion-col size="8">
-                    <ion-button size="small" expand="block" (click)='submitWaiters()'>
+                    <ion-button size="small" expand="block" (click)='runValidation()'>
                         <ion-text color="light">
                             Next
                         </ion-text>
