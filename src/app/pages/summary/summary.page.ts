@@ -12,6 +12,8 @@ import { Storage } from '@ionic/storage';
 })
 export class SummaryPage implements OnInit {
   waitersArray = [];
+  totalTipsMade: number;
+  tipsArray = [];
   constructor(
     private router: Router,
     private storageService: StorageService,
@@ -20,6 +22,9 @@ export class SummaryPage implements OnInit {
   ionViewWillEnter() {
     this.storageService.getKeyAsObservable('finalArray').subscribe((waitersList) => {
       this.waitersArray = waitersList;
+      waitersList.forEach(element => {
+        this.totalTipsMade = element.total_of_the_day;
+      });
     });
   }
   ngOnInit() {
@@ -31,7 +36,7 @@ export class SummaryPage implements OnInit {
     this.storage.ready().then(() => {
       this.storage.remove('finalArray').then(() => {
         this.storage.clear().then(() => {
-          this.router.navigateByUrl('nav/home');
+          this.router.navigateByUrl('ion-nav/nav/home');
         });
       });
     });

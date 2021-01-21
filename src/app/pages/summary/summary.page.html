@@ -1,62 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Summary
-    </ion-title>
-    <ion-buttons slot="start">
-      <ion-button (click)='back()'>
-        <ion-icon color='primary' slot="icon-only" name="arrow-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Summary</ion-title>
+      <ion-title>
+        Summary
+      </ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)='back()'>
+          <ion-icon color='primary' slot="icon-only" name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-grid class='ion-no-margin'>
-    <ion-row class='row-header'>
-      <ion-col class='card-col-header' size='3'>
-        Name
-      </ion-col>
-      <ion-col class='card-col-header' size='3'>
-        points
-      </ion-col>
-      <ion-col class='card-col-header' size='3'>
-        Hours
-      </ion-col>
-      <ion-col class='card-col-header' size='3'>
-        Tips
-      </ion-col>
+  <ion-grid class='ion-margin ion-padding ion-text-center'>
+    <ion-row class='row-tips'>
+      <ion-card>
+        <ion-col>
+          <ion-text color="dark">
+            Total of this shift: {{ totalTipsMade }}
+          </ion-text>
+        </ion-col>
+      </ion-card>
     </ion-row>
-
     <ion-row *ngFor="let item of waitersArray">
-      <ion-col class='card-col' size='3'>
-        {{ item.name }}
-      </ion-col>
-      <ion-col class='card-col' size='3'>
-        {{ item.points }}
-      </ion-col>
-      <ion-col class='card-col' size='3'>
-        {{ item.hours }}
-      </ion-col>
-      <ion-col class='card-col' size='3'>
-        {{ item.tips_received | number:"1.1-2" }}
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="home()" expand="block" fill="solid" shape="round">
-          Home
-        </ion-button>
-      </ion-col>
+      <ion-card>
+        <ion-col class='card-col' size='3'>
+          {{ item.name }}
+        </ion-col>
+        <ion-col class='card-col' size='3'>
+          <p> {{ item.points }} </p>
+        </ion-col>
+        <ion-col class='card-col' size='3'>
+          <p>{{ item.hours }}</p>
+        </ion-col>
+        <ion-col class='card-col' size='3'>
+          <p>{{ item.tips_received | number:"1.1-2" }}</p>
+        </ion-col>
+      </ion-card>
     </ion-row>
   </ion-grid>
-
-
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="home()" expand="block" fill="solid" shape="round">
+      Home
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,77 +1,63 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>
-            Calculator
-        </ion-title>
-        <ion-buttons slot="start">
-            <ion-button (click)='back()'>
-                <ion-icon color='primary' slot="icon-only" name="arrow-back-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-header>
 <ion-content>
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>
+                Calculator
+            </ion-title>
+            <ion-buttons slot="start">
+                <ion-button (click)='back()'>
+                    <ion-icon color='primary' slot="icon-only" name="arrow-back-outline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-header>
+
     <ion-grid>
         <ion-row>
-            <ion-col size='12'>
+            <ion-col>
                 <ion-card class='tips-headers'>
                     <ion-item>
                         <ion-label for='inputTipsToday'> £ </ion-label>
-                        <ion-input name='inputTipsToday' type="number" placeholder="How much today?" [(ngModel)]='inputTipsToday'></ion-input>
+                        <ion-input name='inputTipsToday' type="number" placeholder="How much today?"
+                            [(ngModel)]='inputTipsToday'></ion-input>
                     </ion-item>
                 </ion-card>
             </ion-col>
-            <ion-col size="12">
-
-                <ion-row>
-                    <ion-col size="3">
-                        <ion-item class='name-item'>
-                            <ion-text color="dark"> Name </ion-text>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col size="3">
-                        <ion-item class='points-item'>
-                            <ion-text color="dark"> Points </ion-text>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col size="3">
-                        <ion-item class='hours-item'>
-                            <ion-text color="dark"> Hours </ion-text>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col size="3">
-                        <ion-item class='tips-item'>
-                            <ion-text color="dark"> Tips Made </ion-text>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-
-                <ion-row class='waiters-array' *ngFor='let item of globalWaitersArray; let i = index'>
-                    <ion-col size="3">
-                        <ion-text color="dark"> {{ item.name }} </ion-text>
-                    </ion-col>
-                    <ion-col size="3">
-                        <!-- <ion-item class='points-item ion-text-wrap'>
-                            <ion-label position='fixed'> {{ item.points }} </ion-label>
-                        </ion-item>
-                         -->
-                        <ion-text> {{ item.points }} </ion-text>
-
-                    </ion-col>
-                    <ion-col size="3">
-                        <ion-item class='hours-item ion-text-wrap'>
-                            <ion-label position='fixed'> {{ item.hours }} </ion-label>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col size="3">
-                        <ion-item class='tips-item ion-text-wrap'>
-                            <ion-label position='fixed'> {{ item.tips_received | number:"1.1-2" }} </ion-label>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-
-            </ion-col>
         </ion-row>
+        <ion-row class='names-row ion-margin'>
+            <ion-card>
+                <ion-col size="3">
+                    <ion-text color="dark"> Name </ion-text>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-text color="dark"> Points </ion-text>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-text color="dark"> Hours </ion-text>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-text color="dark"> Tips Made </ion-text>
+                </ion-col>
+            </ion-card>
+        </ion-row>
+
+        <ion-row class='ion-margin waiters-array ion-text-wrap' *ngFor='let item of globalWaitersArray; let i = index'>
+            <ion-card>
+                <ion-col size="3">
+                    <ion-text color="dark"> {{ item.name }} </ion-text>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-text> {{ item.points }} </ion-text>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-text> {{ item.hours }} </ion-text>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-text> {{ item.tips_received | number:"1.1-2" }} </ion-text>
+                </ion-col>
+            </ion-card>
+        </ion-row>
+
     </ion-grid>
 </ion-content>
 <ion-footer>
@@ -79,12 +65,14 @@
         <ion-grid>
             <ion-row>
                 <ion-col size="12">
-                    <ion-button (click)="calculate()" *ngIf='!nextValid' expand="block" fill="solid" color='success' shape="round">
+                    <ion-button (click)="calculate()" *ngIf='!nextValid' expand="block" fill="solid" color='success'
+                        shape="round">
                         Calculate
                     </ion-button>
                 </ion-col>
                 <ion-col size="12">
-                    <ion-button (click)="next()" *ngIf='nextValid' expand="block" fill="solid" color='primary' shape="round">
+                    <ion-button (click)="next()" *ngIf='nextValid' expand="block" fill="solid" color='primary'
+                        shape="round">
                         Next
                     </ion-button>
                 </ion-col>

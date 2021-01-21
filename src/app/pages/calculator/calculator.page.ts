@@ -26,32 +26,12 @@ export class CalculatorPage implements OnInit {
   next() {
     this.calculate();
     this.storage.ready().then(() => {
-      this.storage.get('waitersList').then((res) => {
-        if (res) {
-          this.storage.remove('waitersList').then(() => {
-            this.storage.set('finalArray', this.globalWaitersArray).then(() => {
-              this.router.navigateByUrl('summary');
-            });
-          });
-        } else {
-          this.storage.set('finalArray', this.globalWaitersArray).then(() => {
-            this.router.navigateByUrl('summary');
-          });
-        }
+      this.storage.set('finalArray', this.globalWaitersArray).then(() => {
+        this.router.navigateByUrl('summary');
       });
-    })
-    this.storage.set('finalArray', this.globalWaitersArray).then(() => {
-      this.router.navigateByUrl('summary');
     });
   }
-  async presentAlert(message) {
-    const alert = await this.alert.create({
-      message: message,
-      buttons: ['OK']
-    });
 
-    await alert.present();
-  }
   calculate() {
     let totalA;
     let totalB;
@@ -69,7 +49,6 @@ export class CalculatorPage implements OnInit {
         totalA: totalA,
       });
     });
-    // console.log(this.inputTipsToday);
     if (this.inputTipsToday === null || this.inputTipsToday === undefined) {
       this.presentAlert('Please, add Tips');
     } else {
@@ -93,20 +72,19 @@ export class CalculatorPage implements OnInit {
           totalA: element.totalA,
           totalB: totalB,
           tips_received: this.tipsReceived(element.totalA, totalB),
+          total_of_the_day: this.inputTipsToday
         });
       });
       this.globalWaitersArray = finalArray;
       this.nextValid = true;
     }
-
   }
   ionViewWillEnter() {
     this.nextValid = false;
     this.storageService.getKeyAsObservable('waitersList').subscribe((waitersList) => {
-      if (waitersList === null) this.router.navigateByUrl('nav/home');
+      if (waitersList === null) this.router.navigateByUrl('setup');
       else {
         this.globalWaitersArray = [];
-        // console.log(waitersList);
         waitersList.forEach(element => {
           this.globalWaitersArray.push({
             name: element.name,
@@ -114,7 +92,6 @@ export class CalculatorPage implements OnInit {
             hours: element.hours,
           });
         });
-        // console.log(this.globalWaitersArray)
       }
     });
   }
@@ -143,8 +120,41 @@ export class CalculatorPage implements OnInit {
     }, 0);
   }
   back() {
-    this.storage.remove('waitersList').then(() => {
-      this.router.navigateByUrl('setup');
+    this.storage.get('waitersList').then((response) => {
+      if (response) {
+        let message = 'Are you sure, you data will be deleted';
+        this.handleErrorAlert(message);
+      } else {
+        return;
+      }
     });
+  }
+  async handleErrorAlert(message) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => { }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.storage.remove('waitersList').then((response) => {
+              this.router.navigateByUrl('setup');
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+  async presentAlert(message) {
+    const alert = await this.alert.create({
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

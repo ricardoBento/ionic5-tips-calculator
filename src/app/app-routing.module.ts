@@ -8,7 +8,7 @@ const routes: Routes = [
   // },
   {
     path: '',
-    redirectTo: 'form-validation',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {

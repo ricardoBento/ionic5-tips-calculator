@@ -1,32 +1,22 @@
-ion-list.card-content {
-    display: flex;
-    background-color: var(--ion-color-primary);
+// Fix keyboard pushing content up
+.scroll-content {
+    padding-bottom: 0 !important;
 }
-ion-card-title {
-    ion-item {
-        // --background: transparent !important;
+//
+ion-row.ion-col{
+    height: 100%;
+}
+ion-col.form-col {
+    ion-text.validation-text {
+        font-size: 12px;
     }
 }
-ion-item.text-validation {
-    --background: transparent !important;
-    height: 20px;
+ion-col.buttons-col {
     display: flex;
-    ion-text {
-        font-size: 10px;
-    }
-}
-ion-card-content {
-}
-
-ion-col.remove-btn-col {
-    display: flex;
+    justify-items: center;
     align-items: center;
-}
-
-.footer-grid {
-    ion-col {
-        ion-icon {
-            font-size: 8px;
-        }
+    ion-button {
+        width: 100%;
+        height: 50px;
     }
 }

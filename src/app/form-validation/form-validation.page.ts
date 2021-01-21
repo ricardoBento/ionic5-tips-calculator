@@ -14,7 +14,6 @@ import { of } from 'rxjs';
 })
 export class FormValidationPage implements OnInit {
   waitersForm: FormGroup;
-  // emailField = FormControl;
   pointsData;
   points = new FormArray([], Validators.compose([Validators.required]));
   pointsErrorMessage = [];
@@ -110,7 +109,6 @@ export class FormValidationPage implements OnInit {
         {
           text: 'Ok',
           handler: ($event) => {
-            // console.log($event);
           },
         }
       ],
@@ -203,11 +201,9 @@ export class FormValidationPage implements OnInit {
       let selectedMinutes = quarters.options[quarters.selectedIndex].value;
       let hoursString: any = [`${selectedHour}.${selectedMinutes}`];
       let hoursNumber = parseFloat(hoursString);
-      // console.log(hoursNumber);
       let hoursControl: any = this.getHoursValue(i);
       hoursControl.setValue(hoursNumber);
       hoursControl.markAsTouched({ onlySelf: true });
-      console.log(hoursControl);
     });
   }
   async addPoints(i) {
@@ -233,8 +229,6 @@ export class FormValidationPage implements OnInit {
       ],
     });
     alert.present();
-    alert.onDidDismiss().then(() => {
-    });
   }
   sumPointsArray(array) {
     if (array) {

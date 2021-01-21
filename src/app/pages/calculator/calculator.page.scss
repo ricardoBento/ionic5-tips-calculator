@@ -16,6 +16,13 @@
     border: 1px solid black;
 }
 
+ion-row.names-row {
+    ion-card {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+}
 ion-item {
     --ion-background-color: transparent !important;
 }
@@ -48,25 +55,10 @@ ion-card.card-headers {
     }
 }
 
-.waiters-array {
-    // display: flex;
-    // ion-item.name-item {
-    //     background-color: green;
-    //     width: 50%;
-    // }
-    // ion-item.points-item {
-    //     background-color: orange;
-    //     width: 30%;
-    // }
-    // ion-item.hours-item {
-    //     background-color: pink;
-    //     width: 30%;
-    // }
-    // ion-item.tips-item {
-    //     background-color: blue;
-    //     width: 50%;
-    // }
-    // .name-label {
-    //     background-color: red;
-    // }
+ion-row.waiters-array {
+    ion-card {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
 }
