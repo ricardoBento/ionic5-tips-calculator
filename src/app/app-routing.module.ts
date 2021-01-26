@@ -8,7 +8,7 @@ const routes: Routes = [
   // },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'ion-nav/nav/home',
     pathMatch: 'full'
   },
   {

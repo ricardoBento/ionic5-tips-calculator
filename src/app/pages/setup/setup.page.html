@@ -1,18 +1,28 @@
 <ion-content fullscreen no-bounce has-bouncing="false" forceOverscroll="false">
     <ion-header>
         <ion-toolbar>
-            <ion-title> Setup </ion-title>
-            <ion-buttons slot="start">
-                <ion-button (click)='home()'>
-                    <ion-icon color='primary' slot="icon-only" name="home"></ion-icon>
+            <ion-searchbar #searchbarElem [(ngModel)]="searchTerm" (ionInput)="setFilteredItems()"></ion-searchbar>
+            <ion-buttons slot="end">
+                <ion-button (click)='openLanguagePopover($event)'>
+                    <ion-icon color='primary' slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
                 </ion-button>
             </ion-buttons>
         </ion-toolbar>
     </ion-header>
-    <ion-button (click)="add()" expand="block" fill="solid" shape="round">
-        Add
+
+
+    <ion-button #myButton expand="block" fill="clear" shape="round">
+        Click me
     </ion-button>
-    <form [formGroup]="waitersForm">
+
+    <ion-list>
+        <ion-item *ngFor="let data of jsonData">
+            {{data.name}}
+        </ion-item>
+    </ion-list>
+
+
+    <!-- <form [formGroup]="waitersForm">
         <ion-list formArrayName="waitersList">
             <ion-item-sliding [formGroupName]="i" *ngFor="let item of formData.controls; let i = index">
                 <ion-item>
@@ -54,15 +64,24 @@
                 </ion-item-options>
             </ion-item-sliding>
         </ion-list>
-    </form>
+    </form> -->
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button color='warning' (click)='add()'>
+            <ion-text color="light">
+                Reset
+            </ion-text>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)='add()'>
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>
 <ion-footer>
     <ion-toolbar>
         <ion-button [disabled]='!waitersForm.valid' (click)="submitForm()" expand="block" fill="solid" shape="round">
             Post form
-        </ion-button>
-        <ion-button (click)="resetForm()" color='danger' expand="block" fill="solid" shape="round">
-            Reset
         </ion-button>
     </ion-toolbar>
 </ion-footer>

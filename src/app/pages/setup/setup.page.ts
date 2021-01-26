@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, AlertController, PickerController, ModalController } from '@ionic/angular';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { IonSlides, AlertController, PickerController, ModalController, NavController } from '@ionic/angular';
 import { PickerOptions } from "@ionic/core";
 import { Observable, from, of } from 'rxjs';
 import { Storage } from '@ionic/storage';
@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@ang
 import { PopoverController } from '@ionic/angular';
 import { PopoverComponent } from 'src/app/components/popover/popover.component';
 import { TooltipEvent } from 'src/app/components/ionic4-tooltips/src/models/tooltip-event.model';
+import { Data } from './home.service';
 export interface PickerColumn {
   name: string;
   align?: string;
@@ -35,6 +36,7 @@ export interface PickerColumnOption {
   selector: 'app-setup',
   templateUrl: './setup.page.html',
   styleUrls: ['./setup.page.scss'],
+  providers:[Data]
 })
 export class SetupPage implements OnInit {
   waitersForm: FormGroup;
@@ -42,22 +44,55 @@ export class SetupPage implements OnInit {
   points = new FormArray([], Validators.compose([Validators.required]));
   pointsErrorMessage = [];
   displayPoints = 1.5;
+
+  @ViewChild("searchbarElem", { read: ElementRef }) private searchbarElem: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  private documentClickHandler(event) {
+    console.log(this.searchbarElem.nativeElement);
+  }
+  @ViewChild("myButton", { read: ElementRef }) private myButton: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  private buttonHandler(event) {
+    console.log(this.myButton.nativeElement, event);
+  }
+
+  searchTerm: any = "";
+  jsonData: any;
+
   constructor(
     public formBuilder: FormBuilder,
     private storage: Storage,
     private router: Router,
     public alertController: AlertController,
-    private pickerController: PickerController
+    private pickerController: PickerController,
+    private popoverCtrl: PopoverController,
+    public navCtrl: NavController,
+    public data: Data
   ) {
     of(this.getPoints()).subscribe(points => {
       this.pointsData = points;
     });
   }
+  async openLanguagePopover(ev) {
+    const popover = await this.popoverCtrl.create({
+      component: PopoverComponent,
+      event: ev
+    });
+    await popover.present();
+  }
   home() {
     this.router.navigateByUrl('ion-nav/nav/home');
   }
   ionViewWillEnter() { }
-  ionViewDidLoad() { }
+  ionViewDidLoad() {
+    this.setFilteredItems();
+    console.log(this.searchbarElem.nativeElement);
+  }
+  setFilteredItems() {
+    this.jsonData = this.data.filterItems(this.searchTerm);
+  }
   ngOnInit() {
     this.waitersForm = this.formBuilder.group({
       waitersList: this.formBuilder.array([
@@ -104,8 +139,8 @@ export class SetupPage implements OnInit {
     if (this.waitersForm.valid) {
       let form = this.formData.value;
       this.storage.set('waitersList', form).then((res) => {
-        console.log(res);
-        this.router.navigateByUrl('calculator');
+        // console.log(res);
+        this.router.navigateByUrl('calculator').then(() => this.resetForm());
       });
     } else {
       this.handleErrorAlert('All form must be filled');

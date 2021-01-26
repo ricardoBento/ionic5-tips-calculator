@@ -36,4 +36,28 @@ export class NotificationsService {
         });
         toast.present();
       }
+      async presentToastWithOptions(message) {
+        const toast = await this.toastController.create({
+          header: 'Toast header',
+          message: message,
+          position: 'top',
+          buttons: [
+            {
+              side: 'start',
+              icon: 'star',
+              text: 'Favorite',
+              handler: () => {
+                console.log('Favorite clicked');
+              }
+            }, {
+              text: 'Done',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]
+        });
+        toast.present();
+      }
 }
