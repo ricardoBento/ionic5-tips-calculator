@@ -1,7 +1,8 @@
 {
   "name": "calculator-ui",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

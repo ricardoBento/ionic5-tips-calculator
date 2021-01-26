@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@ang
 import { PopoverController } from '@ionic/angular';
 import { PopoverComponent } from 'src/app/components/popover/popover.component';
 import { TooltipEvent } from 'src/app/components/ionic4-tooltips/src/models/tooltip-event.model';
-import { Data } from './home.service';
+import { Data } from '../../ion-nav/profile/home.service';
 export interface PickerColumn {
   name: string;
   align?: string;
@@ -45,21 +45,7 @@ export class SetupPage implements OnInit {
   pointsErrorMessage = [];
   displayPoints = 1.5;
 
-  @ViewChild("searchbarElem", { read: ElementRef }) private searchbarElem: ElementRef;
-
-  @HostListener('document:click', ['$event'])
-  private documentClickHandler(event) {
-    console.log(this.searchbarElem.nativeElement);
-  }
-  @ViewChild("myButton", { read: ElementRef }) private myButton: ElementRef;
-
-  @HostListener('document:click', ['$event'])
-  private buttonHandler(event) {
-    console.log(this.myButton.nativeElement, event);
-  }
-
-  searchTerm: any = "";
-  jsonData: any;
+ 
 
   constructor(
     public formBuilder: FormBuilder,
@@ -68,8 +54,7 @@ export class SetupPage implements OnInit {
     public alertController: AlertController,
     private pickerController: PickerController,
     private popoverCtrl: PopoverController,
-    public navCtrl: NavController,
-    public data: Data
+
   ) {
     of(this.getPoints()).subscribe(points => {
       this.pointsData = points;
@@ -86,13 +71,7 @@ export class SetupPage implements OnInit {
     this.router.navigateByUrl('ion-nav/nav/home');
   }
   ionViewWillEnter() { }
-  ionViewDidLoad() {
-    this.setFilteredItems();
-    console.log(this.searchbarElem.nativeElement);
-  }
-  setFilteredItems() {
-    this.jsonData = this.data.filterItems(this.searchTerm);
-  }
+  
   ngOnInit() {
     this.waitersForm = this.formBuilder.group({
       waitersList: this.formBuilder.array([
