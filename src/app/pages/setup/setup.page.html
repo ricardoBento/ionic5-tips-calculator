@@ -1,7 +1,6 @@
 <ion-content fullscreen no-bounce has-bouncing="false" forceOverscroll="false">
     <ion-header>
         <ion-toolbar>
-           
             <ion-buttons slot="end">
                 <ion-button (click)='openLanguagePopover($event)'>
                     <ion-icon color='primary' slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
@@ -9,10 +8,6 @@
             </ion-buttons>
         </ion-toolbar>
     </ion-header>
-
-
-  
-
     <form [formGroup]="waitersForm">
         <ion-list formArrayName="waitersList">
             <ion-item-sliding [formGroupName]="i" *ngFor="let item of formData.controls; let i = index">

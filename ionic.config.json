@@ -1,5 +1,5 @@
 {
-  "name": "calculator-ui",
+  "name": "tips-calculator",
   "integrations": {
     "cordova": {},
     "capacitor": {}

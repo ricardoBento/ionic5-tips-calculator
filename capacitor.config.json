@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "calculator-ui",
+  "appId": "uk.tips.calculator",
+  "appName": "tips-calculator",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
