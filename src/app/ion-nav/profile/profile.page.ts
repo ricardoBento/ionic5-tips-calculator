@@ -1,4 +1,4 @@
-import { Data } from './home.service';
+import { StorageService } from './../../services/storage.service';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
@@ -8,33 +8,17 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  @ViewChild("searchbarElem", { read: ElementRef }) private searchbarElem: ElementRef;
-
-  @HostListener('document:click', ['$event'])
-  private documentClickHandler(event) {
-    console.log(this.searchbarElem.nativeElement);
-  }
-  @ViewChild("myButton", { read: ElementRef }) private myButton: ElementRef;
-
-  @HostListener('document:click', ['$event'])
-  private buttonHandler(event) {
-    console.log(this.myButton.nativeElement, event);
-  }
-
-  searchTerm: any = "";
-  jsonData: any;
   constructor(
     public navCtrl: NavController,
-    public data: Data
+    private storageService: StorageService
   ) { }
-
   ngOnInit() {
   }
-  ionViewDidLoad() {
-    this.setFilteredItems();
-    console.log(this.searchbarElem.nativeElement);
+  ionViewWillEnter() {
+    this.storageService.getKeyAsObservable('').subscribe((data) => {
+      console.log(data);
+    })
   }
-  setFilteredItems() {
-    this.jsonData = this.data.filterItems(this.searchTerm);
+  ionViewDidLoad() {
   }
 }

@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@ang
 import { PopoverController } from '@ionic/angular';
 import { PopoverComponent } from 'src/app/components/popover/popover.component';
 import { TooltipEvent } from 'src/app/components/ionic4-tooltips/src/models/tooltip-event.model';
-import { Data } from '../../ion-nav/profile/home.service';
+
 export interface PickerColumn {
   name: string;
   align?: string;
@@ -35,8 +35,7 @@ export interface PickerColumnOption {
 @Component({
   selector: 'app-setup',
   templateUrl: './setup.page.html',
-  styleUrls: ['./setup.page.scss'],
-  providers:[Data]
+  styleUrls: ['./setup.page.scss']
 })
 export class SetupPage implements OnInit {
   waitersForm: FormGroup;
@@ -44,8 +43,6 @@ export class SetupPage implements OnInit {
   points = new FormArray([], Validators.compose([Validators.required]));
   pointsErrorMessage = [];
   displayPoints = 1.5;
-
- 
 
   constructor(
     public formBuilder: FormBuilder,
