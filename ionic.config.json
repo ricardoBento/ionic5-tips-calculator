@@ -1,8 +1,5 @@
 {
-  "name": "ionic5-tips-calculator",
-  "integrations": {
-    "cordova": {},
-    "capacitor": {}
-  },
+  "name": "blank",
+  "integrations": {},
   "type": "angular"
 }

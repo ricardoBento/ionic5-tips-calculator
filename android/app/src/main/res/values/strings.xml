@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">tips-calculator</string>
-    <string name="title_activity_main">tips-calculator</string>
-    <string name="package_name">uk.tips.calculator</string>
-    <string name="custom_url_scheme">uk.tips.calculator</string>
-</resources>
