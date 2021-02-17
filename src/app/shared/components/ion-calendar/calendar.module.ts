@@ -14,4 +14,4 @@ import { initPositionScrollComponent } from './init-position-scroll';
     imports: [IonicModule, CommonModule],
     exports: [CalendarComponent]
 })
-export class NgCalendarModule {}
+export class IonCalendarModule {}

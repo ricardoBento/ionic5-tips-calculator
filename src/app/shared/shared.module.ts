@@ -9,13 +9,15 @@ import { IonFan3wComponent } from './components/ion-fan3w/ion-fan3w.component';
 import { LogoGridComponent } from './components/logo-grid/logo-grid.component';
 import { ImgBackgroundComponent } from './components/img-background/img-background.component';
 import { TweetComponent } from './components/tweet/tweet.component';
+import { IonCalendarModule } from './components/ion-calendar/calendar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     PipesModule,
-    NgxIonicImageViewerModule,   
+    NgxIonicImageViewerModule,
+    IonCalendarModule 
   ],
   entryComponents: [
     IonFanComponent,
@@ -39,7 +41,8 @@ import { TweetComponent } from './components/tweet/tweet.component';
     IonFan3wComponent,
     LogoGridComponent,
     ImgBackgroundComponent,
-    TweetComponent
+    TweetComponent,
+    IonCalendarModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA,
