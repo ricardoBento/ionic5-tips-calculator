@@ -5,17 +5,14 @@
       <ion-icon name="home-outline"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="home">
-      <ion-icon name="search-outline"></ion-icon>
-    </ion-tab-button>
 
-    <ion-tab-button tab="home">
-      <ion-badge color="primary">11</ion-badge>
-      <ion-icon name="notifications-outline"></ion-icon>
-    </ion-tab-button>
-
-    <ion-tab-button tab="home">
-      <ion-icon name="mail-outline"></ion-icon>
+    <ion-tab-button tab="profile">
+      <ion-badge *ngIf='badges' color="warning">
+        <ion-text color="primary">
+          {{ badges_count }}
+        </ion-text>
+      </ion-badge>
+      <ion-icon name="compass"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 

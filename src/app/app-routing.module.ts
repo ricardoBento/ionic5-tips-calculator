@@ -7,9 +7,22 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'calculator',
+    loadChildren: () => import('./calculator/calculator.module').then( m => m.CalculatorPageModule)
   },
+  // {
+  //   path: 'popover',
+  //   loadChildren: () => import('./calculator/popover/popover.module').then(m => m.PopoverComponentModule)
+  // },
+  // {
+  //   path: 'home',
+  //   loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  // },
+  // {
+  //   path: 'profile',
+  //   loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  // },
+
   // {
   //   path: '',
   //   redirectTo: 'home',

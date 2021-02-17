@@ -1,0 +1,23 @@
+ion-grid.calc-grid {
+    height: 100%;
+    ion-row {
+    }
+    ion-row.top-row {
+    }
+    ion-row.bottom-row {
+    }
+    ion-col.top-col {
+    }
+    ion-col.bottom-col {
+    }
+}
+
+.app-container {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
