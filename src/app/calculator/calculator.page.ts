@@ -23,8 +23,9 @@ const CRITERIA_DATA: any[] = [
 export class CalculatorPage implements OnInit, OnDestroy {
   next_disabled: boolean = true;
   // 
-  add_criteria: boolean = true;
+  add_criteria: boolean = false;
   criteria_disabled: boolean = true;
+  // 
   edit_disabled: boolean = true;
   // 
   criteria_list: boolean = true;
@@ -47,6 +48,7 @@ export class CalculatorPage implements OnInit, OnDestroy {
     let message = CRITERIA_DATA;
     this.appStorage.saveStorage('criteriaObj', message).then(() => {
       this.criterias_data.next(message);
+      this.add_criteria = false;
       // this.next_disabled = false;
       // this.criteria_disabled = false;
       // this.add_criteria = false;
@@ -69,13 +71,20 @@ export class CalculatorPage implements OnInit, OnDestroy {
   // addCriteria() {
   //   this.detailsModal();
   // }
-  async editCriteria(){
-    
-  }
-  async addCriteria() {
+  async editCriteria() {
     const modal = await this.modalController.create({
       component: CriteriaComponent,
       cssClass: 'criteria-class',
+    });
+    await modal.present().then(() => {
+    });
+  }
+  async addCriteria() {
+    let Add: any = 'add';
+    const modal = await this.modalController.create({
+      component: CriteriaComponent,
+      cssClass: 'criteria-class',
+      componentProps: Add,
     });
     await modal.present().then(() => {
     });
@@ -84,10 +93,8 @@ export class CalculatorPage implements OnInit, OnDestroy {
       this.appStorage.saveStorage('criteriaObj', data.data).then(() => {
         this.loadCriteriaFromStorage().subscribe(criterias => {
           if (criterias) {
-            // this.criteria_disabled = false;
-            // this.criteria_list = true;
-            // this.next_disabled = false;
             this.criterias_data.next(criterias);
+            this.add_criteria = true;
           }
         });
       });

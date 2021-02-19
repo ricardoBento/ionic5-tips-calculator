@@ -43,7 +43,7 @@
 
         <ion-col class='top-col'>
 
-          <ion-button *ngIf='add_criteria' (click)='addCriteria()' expand="block" shape="round">
+          <ion-button *ngIf='!add_criteria' (click)='addCriteria()' expand="block" shape="round">
             Add Criteria
           </ion-button>
 
@@ -56,7 +56,7 @@
 
 
         <ion-col>
-          <ion-button [disabled]='criteria_disabled' (click)='populateCriteria()' expand="block" shape="round">
+          <ion-button [disabled]='!criteria_disabled' (click)='populateCriteria()' expand="block" shape="round">
             Populate Criteria
           </ion-button>
         </ion-col>
